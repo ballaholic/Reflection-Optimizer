@@ -4,6 +4,7 @@
     using System.Linq;
     using System.Diagnostics;
     using System.Collections.Generic;
+
     public class Program
     {
         public static void Main()
@@ -24,6 +25,18 @@
             }
 
             Console.WriteLine(stopwatch.Elapsed);
+
+            var deleg = PropertyHelper.MakeFastPropertyGetter<IDictionary<string, object>>(property);
+
+            stopwatch = Stopwatch.StartNew();
+
+            for (int i = 0; i < 100000; i++)
+            {
+                var dict = deleg(homeController);
+            }
+
+            Console.WriteLine(stopwatch.Elapsed);
+
         }
     }
 }
